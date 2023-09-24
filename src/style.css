@@ -1,0 +1,68 @@
+*
+{
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body
+{
+    overflow: hidden;
+    font-family: monospace;
+}
+
+.webgl
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    outline: none;
+}
+
+
+
+.loading-bar {
+    --progress: 0;
+    --opacity: 1;
+    height: 1em;
+    width: 80vw;
+    position: fixed;
+    top: 0;
+    bottom:0;
+    left:0;
+    right:0;
+    margin: auto;
+    border-radius: 9999em;
+    background: currentColor;
+    border: .1em solid transparent;
+    pointer-events: none;
+    color: #000;
+    opacity: var(--opacity);
+    transition: opacity .25s ease-in-out 1.5s;
+    mix-blend-mode: multiply;
+    font-size: 3em;
+}
+
+.loading-bar::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: calc(100% * var(--progress) );
+    background:#fff;
+    border-radius: 9999em;
+    transition: width ease-in-out .25s;
+}
+
+.loading-bar::after {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    text-align: center;
+    display: block;
+    margin-top:1.5em;
+    content: 'Loading this hoe';
+}
