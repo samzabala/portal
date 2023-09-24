@@ -237,7 +237,7 @@ window.addEventListener('resize', () =>
 // Base camera
 const camera = new THREE.PerspectiveCamera(45, sizes.width / sizes.height, 0.1, 100)
 camera.position.x = -4
-camera.position.y = 1.5
+camera.position.y = 3
 camera.position.z = -4
 scene.add(camera)
 
@@ -246,7 +246,7 @@ const controls = new OrbitControls(camera, canvas) // dae mo hilingun lubot ko i
 controls.enableDamping = true
 controls.maxPolarAngle = Math.PI / 2 * .9
 controls.minPolarAngle = 0
-controls.minDistance = 0.5
+controls.minDistance = 4
 controls.maxDistance = 8
 
 /**
