@@ -102,7 +102,7 @@ scene.add(overlay)
 /**
  * Textures
  */
-const bakedTexture = textureLoader.load('baked.jpg')
+const bakedTexture = textureLoader.load('bu.baked.jpg')
 bakedTexture.flipY = false // fix the flipped texture misalignment and shit
 bakedTexture.colorSpace = THREE.SRGBColorSpace // correct color profile
 
@@ -141,7 +141,7 @@ gui
     })
 
 gltfLoader.load(
-    'portal.glb',
+    'bu.portal.glb',
     (gltf) => {
 
         const bakedMesh = gltf.scene.children.find(child => child.name === 'baked')
@@ -236,18 +236,20 @@ window.addEventListener('resize', () =>
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(45, sizes.width / sizes.height, 0.1, 100)
-camera.position.x = -4
+camera.position.x = -5
 camera.position.y = 3
-camera.position.z = -4
+camera.position.z = -5
 scene.add(camera)
 
 // Controls
 const controls = new OrbitControls(camera, canvas) // dae mo hilingun lubot ko iyo
 controls.enableDamping = true
-controls.maxPolarAngle = Math.PI / 2 * .9
-controls.minPolarAngle = 0
-controls.minDistance = 4
-controls.maxDistance = 8
+controls.maxPolarAngle = Math.PI / 2 * .98
+controls.minPolarAngle = Math.PI / 4
+controls.maxAzimuthAngle = Math.PI * -.5
+controls.minAzimuthAngle = Math.PI * -1.5
+controls.minDistance = 5
+controls.maxDistance = 10
 
 /**
  * Renderer
