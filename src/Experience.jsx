@@ -1,8 +1,10 @@
-import { shaderMaterial,Sparkles,Center,useTexture,useGLTF,OrbitControls } from '@react-three/drei'
-import { useFrame, extend } from '@react-three/fiber'
-import * as THREE from 'three'
-import { useControls } from 'leva'
 import { useRef,useEffect } from 'react'
+import * as THREE from 'three'
+import { useFrame, extend } from '@react-three/fiber'
+import { useProgress,shaderMaterial,Sparkles,Center,useTexture,useGLTF,OrbitControls } from '@react-three/drei'
+import { useControls } from 'leva'
+import gsap from 'gsap'
+
 import portalVertexShader from './shaders/portal/vertex.glsl'
 import portalFragmentShader from './shaders/portal/fragment.glsl'
 
@@ -18,8 +20,47 @@ export default function Experience() {
     Scene
     Baked
     */
-    const { nodes } = useGLTF(MODEL_PATH)
 
+    const OverlayMaterial = shaderMaterial(
+        {
+            uAlpha: 1
+        },
+        `
+        void main()
+            {
+                gl_Position = vec4(position, 1.0);
+            }
+        `,
+        `
+        uniform float uAlpha;
+        void main()
+        {
+            gl_FragColor = vec4(1.0, 1.0, 1.0, uAlpha);
+        }
+        `
+        
+    )
+
+    extend({ OverlayMaterial }) //tandaan mo nagegeng camelcase ang tag nyan
+    const overlayMaterial = useRef()
+    const overlay = useRef()
+
+
+	const { progress } = useProgress()
+    useEffect(()=>{
+
+        if(progress >= 100){
+            gsap.to(
+                overlayMaterial.current.uniforms.uAlpha,
+                {
+                    duration: 3,
+                    value: 0
+                }
+            )
+        }
+    },[progress])
+
+    const { nodes } = useGLTF(MODEL_PATH)
 
 
     const bakedTexture = useTexture('./model/bu.baked.jpg')
@@ -131,6 +172,10 @@ export default function Experience() {
                 // speed={ 0.2 }
                 count={ 69 }
             />
+            <mesh ref={overlay} >
+                <planeGeometry args={[2,2,1,1]} />
+                <overlayMaterial ref={ overlayMaterial } transparent={ true }/>
+            </mesh>
         </Center>
     </group>
     </>
